@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_DNS_CACHE_TIMEOUT
 Section: 3
@@ -10,6 +10,9 @@ See-also:
   - CURLOPT_DNS_USE_GLOBAL_CACHE (3)
   - CURLOPT_MAXAGE_CONN (3)
   - CURLOPT_RESOLVE (3)
+Protocol:
+  - All
+Added-in: 7.9.3
 ---
 
 # NAME
@@ -52,9 +55,7 @@ Since version 8.1.0, libcurl prunes entries from the DNS cache if it exceeds
 
 60
 
-# PROTOCOLS
-
-All
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -80,10 +81,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Always
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

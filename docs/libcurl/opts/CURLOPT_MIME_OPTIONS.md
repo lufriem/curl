@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_MIME_OPTIONS
 Section: 3
@@ -7,6 +7,11 @@ Source: libcurl
 See-also:
   - CURLOPT_HTTPPOST (3)
   - CURLOPT_MIMEPOST (3)
+Protocol:
+  - HTTP
+  - IMAP
+  - SMTP
+Added-in: 7.81.0
 ---
 
 # NAME
@@ -23,8 +28,8 @@ CURLcode curl_easy_setopt(CURL *handle, CURLOPT_MIME_OPTIONS, long options);
 
 # DESCRIPTION
 
-Pass a long that holds a bitmask of CURLMIMEOPT_* defines. Each bit is a
-Boolean flag used while encoding a MIME tree or multipart form data.
+Pass a long that holds a bitmask of options. Each bit is a boolean flag used
+while encoding a MIME tree or multipart form data.
 
 Available bits are:
 
@@ -52,9 +57,7 @@ containing multipart form is sent, this is normally transmitted as
 
 0, meaning disabled.
 
-# PROTOCOLS
-
-HTTP, IMAP, SMTP
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -88,10 +91,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Option added in 7.81.0.
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

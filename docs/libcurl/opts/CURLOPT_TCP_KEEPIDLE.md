@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_TCP_KEEPIDLE
 Section: 3
@@ -7,6 +7,10 @@ Source: libcurl
 See-also:
   - CURLOPT_TCP_KEEPALIVE (3)
   - CURLOPT_TCP_KEEPINTVL (3)
+  - CURLOPT_TCP_KEEPCNT (3)
+Protocol:
+  - TCP
+Added-in: 7.25.0
 ---
 
 # NAME
@@ -34,9 +38,7 @@ this amount.
 
 60
 
-# PROTOCOLS
-
-All
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -56,15 +58,19 @@ int main(void)
     /* interval time between keep-alive probes: 60 seconds */
     curl_easy_setopt(curl, CURLOPT_TCP_KEEPINTVL, 60L);
 
+    /* maximum number of keep-alive probes: 3 */
+    curl_easy_setopt(curl, CURLOPT_TCP_KEEPCNT, 3L);
+
     curl_easy_perform(curl);
   }
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.25.0
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: curl_multi_fdset
 Section: 3
@@ -10,12 +10,16 @@ See-also:
   - curl_multi_perform (3)
   - curl_multi_timeout (3)
   - curl_multi_wait (3)
+  - curl_multi_waitfds (3)
   - select (2)
+Protocol:
+  - All
+Added-in: 7.9.6
 ---
 
 # NAME
 
-curl_multi_fdset - extracts file descriptor information from a multi handle
+curl_multi_fdset - extract file descriptor information from a multi handle
 
 # SYNOPSIS
 
@@ -75,6 +79,8 @@ which can cause crashes, or worse. The effect of NOT storing it might possibly
 save you from the crash, but makes your program NOT wait for sockets it should
 wait for...
 
+# %PROTOCOLS%
+
 # EXAMPLE
 
 ~~~c
@@ -94,6 +100,10 @@ int main(void)
 
     /* call curl_multi_perform() */
 
+    FD_ZERO(&fdread);
+    FD_ZERO(&fdwrite);
+    FD_ZERO(&fdexcep);
+
     /* get file descriptors from the transfers */
     mc = curl_multi_fdset(multi, &fdread, &fdwrite, &fdexcep, &maxfd);
 
@@ -109,11 +119,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.9.6
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-**CURLMcode** type, general libcurl multi interface error code. See
-libcurl-errors(3)
+This function returns a CURLMcode indicating success or error.
+
+CURLM_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

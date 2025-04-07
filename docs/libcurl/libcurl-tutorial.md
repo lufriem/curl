@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: libcurl-tutorial
 Section: 3
@@ -9,6 +9,9 @@ See-also:
   - libcurl-errors (3)
   - libcurl-multi (3)
   - libcurl-url (3)
+Protocol:
+  - All
+Added-in: n/a
 ---
 
 # NAME
@@ -109,7 +112,7 @@ specified are:
 ## CURL_GLOBAL_WIN32
 
 which only does anything on Windows machines. When used on a Windows machine,
-it makes libcurl initialize the win32 socket stuff. Without having that
+it makes libcurl initialize the Win32 socket stuff. Without having that
 initialized properly, your program cannot use sockets properly. You should
 only do this once for each application, so if your program already does this
 or of another library in use does it, you should not tell libcurl to do this
@@ -191,7 +194,7 @@ One of the most basic properties to set in the handle is the URL. You set your
 preferred URL to transfer with CURLOPT_URL(3) in a manner similar to:
 
 ~~~c
- curl_easy_setopt(handle, CURLOPT_URL, "http://domain.com/");
+ curl_easy_setopt(handle, CURLOPT_URL, "http://example.com/");
 ~~~
 
 Let's assume for a while that you want to receive data as the URL identifies a
@@ -232,7 +235,7 @@ to make your program run fine virtually everywhere.
 (CURLOPT_WRITEDATA(3) was formerly known as *CURLOPT_FILE*. Both names still
 work and do the same thing).
 
-If you are using libcurl as a win32 DLL, you MUST use the
+If you are using libcurl as a Windows DLL, you MUST use the
 CURLOPT_WRITEFUNCTION(3) if you set CURLOPT_WRITEDATA(3) - or experience
 crashes.
 
@@ -1021,14 +1024,16 @@ manners. You may need to change words, headers or various data.
 
 libcurl is your friend here too.
 
-## CUSTOMREQUEST
+## CURLOPT_CUSTOMREQUEST
 
 If just changing the actual HTTP request keyword is what you want, like when
 GET, HEAD or POST is not good enough for you, CURLOPT_CUSTOMREQUEST(3)
 is there for you. It is simple to use:
+
 ~~~c
 curl_easy_setopt(handle, CURLOPT_CUSTOMREQUEST, "MYOWNREQUEST");
 ~~~
+
 When using the custom request, you change the request keyword of the actual
 request you are performing. Thus, by default you make a GET request but you
 can also make a POST operation (as described before) and then replace the POST
@@ -1141,20 +1146,20 @@ The option to enable headers or to run custom FTP commands may be useful to
 combine with CURLOPT_NOBODY(3). If this option is set, no actual file
 content transfer is performed.
 
-## FTP Custom CUSTOMREQUEST
+## FTP Custom CURLOPT_CUSTOMREQUEST
 
 If you do want to list the contents of an FTP directory using your own defined
-FTP command, CURLOPT_CUSTOMREQUEST(3) does just that. "NLST" is the
-default one for listing directories but you are free to pass in your idea of a
-good alternative.
+FTP command, CURLOPT_CUSTOMREQUEST(3) does just that. "NLST" is the default
+one for listing directories but you are free to pass in your idea of a good
+alternative.
 
 # Cookies Without Chocolate Chips
 
 In the HTTP sense, a cookie is a name with an associated value. A server sends
 the name and value to the client, and expects it to get sent back on every
-subsequent request to the server that matches the particular conditions
-set. The conditions include that the domain name and path match and that the
-cookie has not become too old.
+subsequent request to the server that matches the particular conditions set.
+The conditions include that the domain name and path match and that the cookie
+has not become too old.
 
 In real-world cases, servers send new cookies to replace existing ones to
 update them. Server use cookies to "track" users and to keep "sessions".
@@ -1164,12 +1169,14 @@ they are sent from clients to servers with the Cookie: header.
 
 To just send whatever cookie you want to a server, you can use
 CURLOPT_COOKIE(3) to set a cookie string like this:
+
 ~~~c
  curl_easy_setopt(handle, CURLOPT_COOKIE, "name1=var1; name2=var2;");
 ~~~
-In many cases, that is not enough. You might want to dynamically save
-whatever cookies the remote server passes to you, and make sure those cookies
-are then used accordingly on later requests.
+
+In many cases, that is not enough. You might want to dynamically save whatever
+cookies the remote server passes to you, and make sure those cookies are then
+used accordingly on later requests.
 
 One way to do this, is to save all headers you receive in a plain file and
 when you make a request, you tell libcurl to read the previous headers to
@@ -1248,7 +1255,7 @@ curl_mime_subparts(3). Once it has been
 bound to its parent multi-part, a nth-level multi-part belongs to it and
 should not be freed explicitly.
 
-Email messages data is not supposed to be non-ascii and line length is
+Email messages data is not supposed to be non-ASCII and line length is
 limited: fortunately, some transfer encodings are defined by the standards to
 support the transmission of such incompatible data. Function
 curl_mime_encoder(3) tells a part that its source data must be encoded

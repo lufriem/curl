@@ -1,11 +1,15 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
-Title: CURLOPT_SSH_KEYDATA
+Title: CURLOPT_SSH_HOSTKEYDATA
 Section: 3
 Source: libcurl
 See-also:
   - CURLOPT_SSH_HOSTKEYFUNCTION (3)
+Protocol:
+  - SFTP
+  - SCP
+Added-in: 7.84.0
 ---
 
 # NAME
@@ -29,9 +33,7 @@ the callback set with CURLOPT_SSH_HOSTKEYFUNCTION(3).
 
 NULL
 
-# PROTOCOLS
-
-SCP and SFTP
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -64,10 +66,15 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
+# NOTES
 
-Added in 7.84.0, works only with libssh2 backend.
+Works only with the libssh2 backend.
+
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

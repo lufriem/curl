@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_QUICK_EXIT
 Section: 3
@@ -7,6 +7,9 @@ Source: libcurl
 See-also:
   - CURLOPT_FAILONERROR (3)
   - CURLOPT_RESOLVE (3)
+Protocol:
+  - All
+Added-in: 7.87.0
 ---
 
 # NAME
@@ -35,9 +38,7 @@ possible (though short-lived) leak of associated resources.
 
 0
 
-# PROTOCOLS
-
-All
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -53,10 +54,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.87.0
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

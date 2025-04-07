@@ -29,8 +29,13 @@
 #include "curl_addrinfo.h"
 #include "timeval.h" /* for timediff_t */
 #include "asyn.h"
+#include "httpsrr.h"
 
 #include <setjmp.h>
+
+#ifdef USE_HTTPSRR
+# include <stdint.h>
+#endif
 
 /* Allocate enough memory to hold the full name information structs and
  * everything. OSF1 is known to require at least 8872 bytes. The buffer
@@ -49,25 +54,30 @@ struct hostent;
 struct Curl_easy;
 struct connectdata;
 
-/*
- * Curl_global_host_cache_init() initializes and sets up a global DNS cache.
- * Global DNS cache is general badness. Do not use. This will be removed in
- * a future version. Use the share interface instead!
- *
- * Returns a struct Curl_hash pointer on success, NULL on failure.
- */
-struct Curl_hash *Curl_global_host_cache_init(void);
+enum alpnid {
+  ALPN_none = 0,
+  ALPN_h1 = CURLALTSVC_H1,
+  ALPN_h2 = CURLALTSVC_H2,
+  ALPN_h3 = CURLALTSVC_H3
+};
 
 struct Curl_dns_entry {
   struct Curl_addrinfo *addr;
-  /* timestamp == 0 -- permanent CURLOPT_RESOLVE entry (doesn't time out) */
+#ifdef USE_HTTPSRR
+  struct Curl_https_rrinfo *hinfo;
+#endif
+  /* timestamp == 0 -- permanent CURLOPT_RESOLVE entry (does not time out) */
   time_t timestamp;
-  /* use-counter, use Curl_resolv_unlock to release reference */
-  long inuse;
+  /* reference counter, entry is freed on reaching 0 */
+  size_t refcount;
   /* hostname port number that resolved to addr. */
   int hostport;
-  /* hostname that resolved to addr. may be NULL (unix domain sockets). */
+  /* hostname that resolved to addr. may be NULL (Unix domain sockets). */
   char hostname[1];
+};
+
+struct Curl_dnscache {
+  struct Curl_hash entries;
 };
 
 bool Curl_host_is_ipnum(const char *hostname);
@@ -76,8 +86,8 @@ bool Curl_host_is_ipnum(const char *hostname);
  * Curl_resolv() returns an entry with the info for the specified host
  * and port.
  *
- * The returned data *MUST* be "unlocked" with Curl_resolv_unlock() after
- * use, or we'll leak memory!
+ * The returned data *MUST* be "released" with Curl_resolv_unlink() after
+ * use, or we will leak memory!
  */
 /* return codes */
 enum resolve_t {
@@ -96,7 +106,7 @@ enum resolve_t Curl_resolv_timeout(struct Curl_easy *data,
                                    struct Curl_dns_entry **dnsentry,
                                    timediff_t timeoutms);
 
-#ifdef ENABLE_IPV6
+#ifdef USE_IPV6
 /*
  * Curl_ipv6works() returns TRUE if IPv6 seems to work.
  */
@@ -124,15 +134,17 @@ struct Curl_addrinfo *Curl_getaddrinfo(struct Curl_easy *data,
                                        int *waitp);
 
 
-/* unlock a previously resolved dns entry */
-void Curl_resolv_unlock(struct Curl_easy *data,
-                        struct Curl_dns_entry *dns);
+/* unlink a dns entry, potentially shared with a cache */
+void Curl_resolv_unlink(struct Curl_easy *data,
+                        struct Curl_dns_entry **pdns);
 
 /* init a new dns cache */
-void Curl_init_dnscache(struct Curl_hash *hash, int hashsize);
+void Curl_dnscache_init(struct Curl_dnscache *dns, size_t hashsize);
+
+void Curl_dnscache_destroy(struct Curl_dnscache *dns);
 
 /* prune old entries from the DNS cache */
-void Curl_hostcache_prune(struct Curl_easy *data);
+void Curl_dnscache_prune(struct Curl_easy *data);
 
 /* IPv4 threadsafe resolve function used for synch and asynch builds */
 struct Curl_addrinfo *Curl_ipv4_resolve_r(const char *hostname, int port);
@@ -141,7 +153,7 @@ CURLcode Curl_once_resolved(struct Curl_easy *data, bool *protocol_connect);
 
 /*
  * Curl_addrinfo_callback() is used when we build with any asynch specialty.
- * Handles end of async request processing. Inserts ai into hostcache when
+ * Handles end of async request processing. Inserts ai into dnscache when
  * status is CURL_ASYNC_SUCCESS. Twiddles fields in conn to indicate async
  * request completed whether successful or failed.
  */
@@ -162,8 +174,8 @@ void Curl_printable_address(const struct Curl_addrinfo *ip,
  *
  * Returns the Curl_dns_entry entry pointer or NULL if not in the cache.
  *
- * The returned data *MUST* be "unlocked" with Curl_resolv_unlock() after
- * use, or we'll leak memory!
+ * The returned data *MUST* be "released" with Curl_resolv_unlink() after
+ * use, or we will leak memory!
  */
 struct Curl_dns_entry *
 Curl_fetch_addr(struct Curl_easy *data,
@@ -172,18 +184,14 @@ Curl_fetch_addr(struct Curl_easy *data,
 
 /*
  * Curl_cache_addr() stores a 'Curl_addrinfo' struct in the DNS cache.
- *
+ * Call takes ownership of `addr` and free's it on failure.
+ * @param permanent   iff TRUE, entry will never become stale
  * Returns the Curl_dns_entry entry pointer or NULL if the storage failed.
  */
 struct Curl_dns_entry *
 Curl_cache_addr(struct Curl_easy *data, struct Curl_addrinfo *addr,
-                const char *hostname, size_t hostlen, int port);
-
-#ifndef INADDR_NONE
-#define CURL_INADDR_NONE (in_addr_t) ~0
-#else
-#define CURL_INADDR_NONE INADDR_NONE
-#endif
+                const char *hostname, size_t hostlen, int port,
+                bool permanent);
 
 /*
  * Function provided by the resolver backend to set DNS servers to use.
@@ -210,11 +218,6 @@ CURLcode Curl_set_dns_local_ip4(struct Curl_easy *data,
  */
 CURLcode Curl_set_dns_local_ip6(struct Curl_easy *data,
                                 const char *local_ip6);
-
-/*
- * Clean off entries from the cache
- */
-void Curl_hostcache_clean(struct Curl_easy *data, struct Curl_hash *hash);
 
 /*
  * Populate the cache with specified entries from CURLOPT_RESOLVE.

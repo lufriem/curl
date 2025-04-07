@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_RTSP_TRANSPORT
 Section: 3
@@ -7,6 +7,9 @@ Source: libcurl
 See-also:
   - CURLOPT_RTSP_REQUEST (3)
   - CURLOPT_RTSP_SESSION_ID (3)
+Protocol:
+  - RTSP
+Added-in: 7.20.0
 ---
 
 # NAME
@@ -36,9 +39,7 @@ option.
 
 NULL
 
-# PROTOCOLS
-
-RTSP
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -58,11 +59,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.20.0
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, CURLE_UNKNOWN_OPTION if not, or
-CURLE_OUT_OF_MEMORY if there was insufficient heap space.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

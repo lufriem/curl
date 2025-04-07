@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_SEEKFUNCTION
 Section: 3
@@ -9,6 +9,11 @@ See-also:
   - CURLOPT_IOCTLFUNCTION (3)
   - CURLOPT_SEEKDATA (3)
   - CURLOPT_STDERR (3)
+Protocol:
+  - FTP
+  - HTTP
+  - SFTP
+Added-in: 7.18.0
 ---
 
 # NAME
@@ -57,15 +62,13 @@ done by instead reading from the input or similar.
 
 If you forward the input arguments directly to fseek(3) or lseek(3), note that
 the data type for *offset* is not the same as defined for curl_off_t on
-many systems!
+many systems.
 
 # DEFAULT
 
-By default, this is NULL and unused.
+NULL
 
-# PROTOCOLS
-
-HTTP, FTP, SFTP
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -93,10 +96,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.18.0
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

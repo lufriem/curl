@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_RESUME_FROM_LARGE
 Section: 3
@@ -8,6 +8,9 @@ See-also:
   - CURLOPT_INFILESIZE_LARGE (3)
   - CURLOPT_RANGE (3)
   - CURLOPT_RESUME_FROM (3)
+Protocol:
+  - All
+Added-in: 7.11.0
 ---
 
 # NAME
@@ -39,9 +42,7 @@ file to the remote target file.
 
 0, not used
 
-# PROTOCOLS
-
-HTTP, FTP, SFTP, FILE
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -70,10 +71,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.11.0
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

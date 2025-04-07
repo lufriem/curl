@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_PREREQDATA
 Section: 3
@@ -8,6 +8,9 @@ See-also:
   - CURLINFO_PRIMARY_IP (3)
   - CURLINFO_PRIMARY_PORT (3)
   - CURLOPT_PREREQFUNCTION (3)
+Protocol:
+  - All
+Added-in: 7.80.0
 ---
 
 # NAME
@@ -31,9 +34,7 @@ argument in the pre-request callback set with CURLOPT_PREREQFUNCTION(3).
 
 NULL
 
-# PROTOCOLS
-
-All
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -64,10 +65,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.80.0
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

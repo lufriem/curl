@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLINFO_SCHEME
 Section: 3
@@ -10,6 +10,9 @@ See-also:
   - CURLINFO_RESPONSE_CODE (3)
   - curl_easy_getinfo (3)
   - curl_easy_setopt (3)
+Protocol:
+  - All
+Added-in: 7.52.0
 ---
 
 # NAME
@@ -31,12 +34,13 @@ string holding the URL scheme used for the most recent connection done with
 this CURL **handle**.
 
 The **scheme** pointer is NULL or points to private memory. You MUST NOT
-free - it gets freed when you call curl_easy_cleanup(3) on the
-corresponding CURL handle.
+free - it gets freed when you call curl_easy_cleanup(3) on the corresponding
+curl handle.
 
-# PROTOCOLS
+The returned scheme might be upper or lowercase. Do comparisons case
+insensitively.
 
-All
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -59,10 +63,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.52.0
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_getinfo(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

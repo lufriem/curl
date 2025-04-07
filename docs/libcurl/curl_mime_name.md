@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: curl_mime_name
 Section: 3
@@ -8,6 +8,11 @@ See-also:
   - curl_mime_addpart (3)
   - curl_mime_data (3)
   - curl_mime_type (3)
+Protocol:
+  - HTTP
+  - IMAP
+  - SMTP
+Added-in: 7.56.0
 ---
 
 # NAME
@@ -36,6 +41,8 @@ safely be released or reused after call. Setting a part's name multiple times
 is valid: only the value set by the last call is retained. It is possible to
 reset the name of a part by setting *name* to NULL.
 
+# %PROTOCOLS%
+
 # EXAMPLE
 
 ~~~c
@@ -58,10 +65,13 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-As long as at least one of HTTP, SMTP or IMAP is enabled. Added in 7.56.0.
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-CURLE_OK or a CURL error code upon failure.
+This function returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3). If CURLOPT_ERRORBUFFER(3) was set with curl_easy_setopt(3)
+there can be an error message stored in the error buffer when non-zero is
+returned.

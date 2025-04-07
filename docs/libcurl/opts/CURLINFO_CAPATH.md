@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLINFO_CAPATH
 Section: 3
@@ -8,6 +8,14 @@ See-also:
   - CURLINFO_CAINFO (3)
   - curl_easy_getinfo (3)
   - curl_easy_setopt (3)
+Protocol:
+  - TLS
+TLS-backend:
+  - OpenSSL
+  - GnuTLS
+  - mbedTLS
+  - wolfSSL
+Added-in: 7.84.0
 ---
 
 # NAME
@@ -36,9 +44,7 @@ This is a path identifying a directory.
 
 The **path** pointer is set to NULL if there is no default path.
 
-# PROTOCOLS
-
-All
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -57,10 +63,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.84.0
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_getinfo(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

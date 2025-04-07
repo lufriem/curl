@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_PROXY_ISSUERCERT
 Section: 3
@@ -10,6 +10,12 @@ See-also:
   - CURLOPT_PROXY_SSL_VERIFYPEER (3)
   - CURLOPT_SSL_VERIFYHOST (3)
   - CURLOPT_SSL_VERIFYPEER (3)
+Protocol:
+  - TLS
+TLS-backend:
+  - OpenSSL
+  - GnuTLS
+Added-in: 7.71.0
 ---
 
 # NAME
@@ -34,25 +40,25 @@ additional check is useful in multi-level PKI where one needs to enforce that
 the peer certificate is from a specific branch of the tree.
 
 This option makes sense only when used in combination with the
-CURLOPT_PROXY_SSL_VERIFYPEER(3) option. Otherwise, the result of the
-check is not considered as failure.
+CURLOPT_PROXY_SSL_VERIFYPEER(3) option. Otherwise, the result of the check is
+not considered as failure.
 
 A specific error code (CURLE_SSL_ISSUER_ERROR) is defined with the option,
 which is returned if the setup of the SSL/TLS session has failed due to a
-mismatch with the issuer of peer certificate
-(CURLOPT_PROXY_SSL_VERIFYPEER(3) has to be set too for the check to
-fail).
+mismatch with the issuer of peer certificate (CURLOPT_PROXY_SSL_VERIFYPEER(3)
+has to be set too for the check to fail).
 
 The application does not have to keep the string around after setting this
 option.
+
+Using this option multiple times makes the last set string override the
+previous ones. Set it to NULL to disable its use again.
 
 # DEFAULT
 
 NULL
 
-# PROTOCOLS
-
-All TLS-based protocols
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -72,11 +78,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.71.0. This option is supported by the OpenSSL backends.
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, CURLE_UNKNOWN_OPTION if not, or
-CURLE_OUT_OF_MEMORY if there was insufficient heap space.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

@@ -1,11 +1,14 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: curl_version
 Section: 3
 Source: libcurl
 See-also:
   - curl_version_info (3)
+Protocol:
+  - All
+Added-in: 7.1
 ---
 
 # NAME
@@ -25,7 +28,9 @@ char *curl_version();
 Returns a human readable string with the version number of libcurl and some of
 its important components (like OpenSSL version).
 
-We recommend using curl_version_info(3) instead!
+We recommend using curl_version_info(3) instead.
+
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -36,9 +41,7 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Always
+# %AVAILABILITY%
 
 # RETURN VALUE
 

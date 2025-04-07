@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_SEEKDATA
 Section: 3
@@ -9,6 +9,11 @@ See-also:
   - CURLOPT_IOCTLFUNCTION (3)
   - CURLOPT_SEEKFUNCTION (3)
   - CURLOPT_STDERR (3)
+Protocol:
+  - FTP
+  - HTTP
+  - SFTP
+Added-in: 7.18.0
 ---
 
 # NAME
@@ -32,9 +37,7 @@ CURLOPT_SEEKFUNCTION(3) option, this is the pointer you get as input.
 
 If you do not set this, NULL is passed to the callback.
 
-# PROTOCOLS
-
-HTTP, FTP, SFTP
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -63,9 +66,6 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.18.0
+# %AVAILABILITY%
 
 # RETURN VALUE
-

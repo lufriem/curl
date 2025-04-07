@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_TLS13_CIPHERS
 Section: 3
@@ -11,6 +11,14 @@ See-also:
   - CURLOPT_SSLVERSION (3)
   - CURLOPT_SSL_CIPHER_LIST (3)
   - CURLOPT_USE_SSL (3)
+Protocol:
+  - TLS
+TLS-backend:
+  - OpenSSL
+  - wolfSSL
+  - mbedTLS
+  - rustls
+Added-in: 7.61.0
 ---
 
 # NAME
@@ -32,25 +40,28 @@ cipher suites to use for the TLS 1.3 connection. The list must be
 syntactically correct, it consists of one or more cipher suite strings
 separated by colons.
 
+For setting TLS 1.2 (1.1, 1.0) ciphers see CURLOPT_SSL_CIPHER_LIST(3).
+
+A valid example of a cipher list is:
+~~~c
+"TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256"
+~~~
+
 Find more details about cipher lists on this URL:
 
  https://curl.se/docs/ssl-ciphers.html
 
-This option is currently used only when curl is built to use OpenSSL 1.1.1 or
-later, or Schannel. If you are using a different SSL backend you can try
-setting TLS 1.3 cipher suites by using the CURLOPT_SSL_CIPHER_LIST(3)
-option.
-
 The application does not have to keep the string around after setting this
 option.
 
+Using this option multiple times makes the last set string override the
+previous ones. Set it to NULL to restore to internal default.
+
 # DEFAULT
 
-NULL, use internal default
+NULL, use internal built-in
 
-# PROTOCOLS
-
-All TLS based protocols: HTTPS, FTPS, IMAPS, POP3S, SMTPS etc.
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -69,12 +80,22 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
+# HISTORY
 
-Added in 7.61.0 for OpenSSL. Available when built with OpenSSL \>= 1.1.1.
+OpenSSL support added in 7.61.0, available when built with OpenSSL \>= 1.1.1.
+LibreSSL support added in 8.3.0, available when built with LibreSSL \>= 3.4.1.
+wolfSSL support added in 8.10.0.
+mbedTLS support added in 8.10.0, available when built with mbedTLS \>= 3.6.0.
+Rustls support added in 8.10.0.
 
-Added in 7.85.0 for Schannel.
+Before curl 8.10.0 with mbedTLS or wolfSSL, TLS 1.3 cipher suites were set
+by using the CURLOPT_SSL_CIPHER_LIST(3) option.
+
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if supported, CURLE_NOT_BUILT_IN otherwise.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

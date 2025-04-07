@@ -1,11 +1,14 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_TFTP_BLKSIZE
 Section: 3
 Source: libcurl
 See-also:
   - CURLOPT_MAXFILESIZE (3)
+Protocol:
+  - TFTP
+Added-in: 7.19.4
 ---
 
 # NAME
@@ -33,9 +36,7 @@ is used.
 
 512
 
-# PROTOCOLS
-
-TFTP
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -54,10 +55,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.19.4
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLMOPT_PIPELINING_SERVER_BL
 Section: 3
@@ -7,6 +7,9 @@ Source: libcurl
 See-also:
   - CURLMOPT_PIPELINING (3)
   - CURLMOPT_PIPELINING_SITE_BL (3)
+Protocol:
+  - HTTP
+Added-in: 7.30.0
 ---
 
 # NAME
@@ -39,9 +42,9 @@ Pass a NULL pointer to clear the block list.
 
 # DEFAULT
 
-The default value is NULL, which means that there is no block list.
+NULL, which means that there is no block list.
 
-# PROTOCOLS
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -59,10 +62,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.30.0
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLM_OK if the option is supported, and CURLM_UNKNOWN_OPTION if not.
+curl_multi_setopt(3) returns a CURLMcode indicating success or error.
+
+CURLM_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

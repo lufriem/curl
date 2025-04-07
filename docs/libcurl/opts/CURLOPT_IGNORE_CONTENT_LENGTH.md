@@ -1,12 +1,16 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_IGNORE_CONTENT_LENGTH
 Section: 3
 Source: libcurl
+Protocol:
+  - HTTP
+  - FTP
 See-also:
   - CURLOPT_HTTP_VERSION (3)
   - CURLOPT_MAXFILESIZE_LARGE (3)
+Added-in: 7.14.1
 ---
 
 # NAME
@@ -42,9 +46,7 @@ Only use this option if strictly necessary.
 
 0
 
-# PROTOCOLS
-
-HTTP
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -63,11 +65,15 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
+# HISTORY
 
-Added in 7.14.1. Support for FTP added in 7.46.0. This option is not working
-for HTTP when libcurl is built to use the hyper backend.
+Support for FTP added in 7.46.0.
+
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

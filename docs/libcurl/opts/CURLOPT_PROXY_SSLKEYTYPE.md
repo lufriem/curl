@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_PROXY_SSLKEYTYPE
 Section: 3
@@ -8,6 +8,13 @@ See-also:
   - CURLOPT_PROXY_SSLCERT (3)
   - CURLOPT_PROXY_SSLKEY (3)
   - CURLOPT_SSLKEYTYPE (3)
+Protocol:
+  - TLS
+TLS-backend:
+  - OpenSSL
+  - BearSSL
+  - wolfSSL
+Added-in: 7.52.0
 ---
 
 # NAME
@@ -27,14 +34,16 @@ CURLcode curl_easy_setopt(CURL *handle, CURLOPT_PROXY_SSLKEYTYPE, char *type);
 This option is for connecting to an HTTPS proxy, not an HTTPS server.
 
 Pass a pointer to a null-terminated string as parameter. The string should be
-the format of your private key. Supported formats are "PEM", "DER" and "ENG".
+the format of your private key. Supported formats are "PEM", "DER", "ENG" and
+"PROV" (the latter added in curl 8.12.0).
 
 The application does not have to keep the string around after setting this
 option.
 
-# PROTOCOLS
+Using this option multiple times makes the last set string override the
+previous ones. Set it to NULL to disable its use again.
 
-Used with HTTPS proxy
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -56,11 +65,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.52.0
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if TLS is supported, CURLE_UNKNOWN_OPTION if not, or
-CURLE_OUT_OF_MEMORY if there was insufficient heap space.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

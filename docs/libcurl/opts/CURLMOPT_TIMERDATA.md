@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLMOPT_TIMERDATA
 Section: 3
@@ -7,6 +7,9 @@ Source: libcurl
 See-also:
   - CURLMOPT_SOCKETFUNCTION (3)
   - CURLMOPT_TIMERFUNCTION (3)
+Protocol:
+  - All
+Added-in: 7.16.0
 ---
 
 # NAME
@@ -27,15 +30,13 @@ A data **pointer** to pass to the timer callback set with the
 CURLMOPT_TIMERFUNCTION(3) option.
 
 This pointer is not touched by libcurl but is only be passed in to the timer
-callbacks's **clientp** argument.
+callback's **clientp** argument.
 
 # DEFAULT
 
 NULL
 
-# PROTOCOLS
-
-All
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -66,10 +67,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.16.0
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLM_OK if the option is supported, and CURLM_UNKNOWN_OPTION if not.
+curl_multi_setopt(3) returns a CURLMcode indicating success or error.
+
+CURLM_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

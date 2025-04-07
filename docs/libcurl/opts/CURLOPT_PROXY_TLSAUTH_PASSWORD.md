@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_PROXY_TLSAUTH_PASSWORD
 Section: 3
@@ -9,6 +9,12 @@ See-also:
   - CURLOPT_PROXY_TLSAUTH_USERNAME (3)
   - CURLOPT_TLSAUTH_TYPE (3)
   - CURLOPT_TLSAUTH_USERNAME (3)
+Protocol:
+  - TLS
+TLS-backend:
+  - OpenSSL
+  - GnuTLS
+Added-in: 7.52.0
 ---
 
 # NAME
@@ -34,13 +40,14 @@ CURLOPT_PROXY_TLSAUTH_USERNAME(3) option also be set.
 The application does not have to keep the string around after setting this
 option.
 
+Using this option multiple times makes the last set string override the
+previous ones. Set it to NULL to disable its use again.
+
 # DEFAULT
 
 NULL
 
-# PROTOCOLS
-
-All
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -61,11 +68,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.52.0, with the OpenSSL and GnuTLS backends only
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, CURLE_UNKNOWN_OPTION if not, or
-CURLE_OUT_OF_MEMORY if there was insufficient heap space.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

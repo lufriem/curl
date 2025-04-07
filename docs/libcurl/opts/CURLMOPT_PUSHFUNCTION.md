@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLMOPT_PUSHFUNCTION
 Section: 3
@@ -9,6 +9,9 @@ See-also:
   - CURLMOPT_PUSHDATA (3)
   - CURLOPT_PIPEWAIT (3)
   - RFC 7540
+Protocol:
+  - HTTP
+Added-in: 7.44.0
 ---
 
 # NAME
@@ -74,7 +77,7 @@ introduced in later libcurl versions.
 ## CURL_PUSH_OK (0)
 
 The application has accepted the stream and it can now start receiving data,
-the ownership of the CURL handle has been taken over by the application.
+the ownership of the curl handle has been taken over by the application.
 
 ## CURL_PUSH_DENY (1)
 
@@ -94,9 +97,7 @@ All other return codes are reserved for future use.
 
 NULL, no callback
 
-# PROTOCOLS
-
-HTTP(S) (HTTP/2 only)
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -139,10 +140,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.44.0
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLM_OK if the option is supported, and CURLM_UNKNOWN_OPTION if not.
+curl_multi_setopt(3) returns a CURLMcode indicating success or error.
+
+CURLM_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

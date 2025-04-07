@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_XFERINFODATA
 Section: 3
@@ -8,6 +8,9 @@ See-also:
   - CURLOPT_NOPROGRESS (3)
   - CURLOPT_VERBOSE (3)
   - CURLOPT_XFERINFOFUNCTION (3)
+Protocol:
+  - All
+Added-in: 7.32.0
 ---
 
 # NAME
@@ -31,11 +34,9 @@ This is an alias for CURLOPT_PROGRESSDATA(3).
 
 # DEFAULT
 
-The default value of this parameter is NULL.
+NULL
 
-# PROTOCOLS
-
-All
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -71,10 +72,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.32.0
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

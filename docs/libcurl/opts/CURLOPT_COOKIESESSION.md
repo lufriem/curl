@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_COOKIESESSION
 Section: 3
@@ -8,6 +8,9 @@ See-also:
   - CURLOPT_COOKIE (3)
   - CURLOPT_COOKIEFILE (3)
   - CURLOPT_COOKIEJAR (3)
+Protocol:
+  - HTTP
+Added-in: 7.9.7
 ---
 
 # NAME
@@ -39,9 +42,7 @@ the same session.
 
 0
 
-# PROTOCOLS
-
-HTTP
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -66,10 +67,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Along with HTTP
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

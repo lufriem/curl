@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_FORBID_REUSE
 Section: 3
@@ -8,6 +8,9 @@ See-also:
   - CURLOPT_FRESH_CONNECT (3)
   - CURLOPT_MAXCONNECTS (3)
   - CURLOPT_MAXLIFETIME_CONN (3)
+Protocol:
+  - All
+Added-in: 7.7
 ---
 
 # NAME
@@ -37,9 +40,7 @@ Set to 0 to have libcurl keep the connection open for possible later reuse
 
 0
 
-# PROTOCOLS
-
-Most
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -60,10 +61,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Always
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_POSTFIELDSIZE_LARGE
 Section: 3
@@ -8,6 +8,9 @@ See-also:
   - CURLOPT_COPYPOSTFIELDS (3)
   - CURLOPT_POSTFIELDS (3)
   - CURLOPT_POSTFIELDSIZE (3)
+Protocol:
+  - HTTP
+Added-in: 7.11.1
 ---
 
 # NAME
@@ -35,9 +38,7 @@ CURLOPT_READFUNCTION(3) (if used) to signal the end of data.
 
 -1
 
-# PROTOCOLS
-
-HTTP(S)
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -63,10 +64,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Along with HTTP
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if HTTP is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

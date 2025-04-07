@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLINFO_RETRY_AFTER
 Section: 3
@@ -8,6 +8,9 @@ See-also:
   - CURLOPT_HEADERFUNCTION (3)
   - CURLOPT_STDERR (3)
   - curl_easy_header (3)
+Protocol:
+  - All
+Added-in: 7.66.0
 ---
 
 # NAME
@@ -33,13 +36,16 @@ While the HTTP header might contain a fixed date string, the
 CURLINFO_RETRY_AFTER(3) always returns the number of seconds to wait -
 or zero if there was no header or the header could not be parsed.
 
+This option used to return a negative wait time if the server provided a date
+in the past. Since 8.12.0, a negative wait time is returned as zero. In any
+case we recommend checking that the wait time is within an acceptable range for
+your circumstance.
+
 # DEFAULT
 
-Returns zero delay if there was no header.
+Zero if there was no header.
 
-# PROTOCOLS
-
-HTTP(S)
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -62,10 +68,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.66.0
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_getinfo(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

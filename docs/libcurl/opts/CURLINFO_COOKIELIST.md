@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLINFO_COOKIELIST
 Section: 3
@@ -8,6 +8,9 @@ See-also:
   - CURLOPT_COOKIELIST (3)
   - curl_easy_getinfo (3)
   - curl_easy_setopt (3)
+Protocol:
+  - HTTP
+Added-in: 7.14.1
 ---
 
 # NAME
@@ -34,9 +37,7 @@ received) the 'struct curl_slist *' is made a NULL pointer.
 Since 7.43.0 cookies that were imported in the Set-Cookie format without a
 domain name are not exported by this option.
 
-# PROTOCOLS
-
-HTTP(S)
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -73,10 +74,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.14.1
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_getinfo(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

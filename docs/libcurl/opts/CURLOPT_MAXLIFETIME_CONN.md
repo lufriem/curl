@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_MAXLIFETIME_CONN
 Section: 3
@@ -9,6 +9,9 @@ See-also:
   - CURLOPT_FRESH_CONNECT (3)
   - CURLOPT_MAXAGE_CONN (3)
   - CURLOPT_TIMEOUT (3)
+Protocol:
+  - All
+Added-in: 7.80.0
 ---
 
 # NAME
@@ -41,11 +44,9 @@ If set to 0, this behavior is disabled: all connections are eligible for reuse.
 
 # DEFAULT
 
-Default *maxlifetime* is 0 seconds (i.e., disabled).
+0 seconds (i.e., disabled)
 
-# PROTOCOLS
-
-All
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -64,10 +65,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.80.0
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

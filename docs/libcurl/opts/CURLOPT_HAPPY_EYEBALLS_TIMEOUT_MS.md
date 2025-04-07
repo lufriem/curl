@@ -1,13 +1,16 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_HAPPY_EYEBALLS_TIMEOUT_MS
 Section: 3
 Source: libcurl
+Protocol:
+  - All
 See-also:
   - CURLOPT_CONNECTTIMEOUT_MS (3)
   - CURLOPT_LOW_SPEED_LIMIT (3)
   - CURLOPT_TIMEOUT (3)
+Added-in: 7.59.0
 ---
 
 # NAME
@@ -40,9 +43,7 @@ currently defaults to 200 ms. Firefox and Chrome currently default to 300 ms.
 
 CURL_HET_DEFAULT (currently defined as 200L)
 
-# PROTOCOLS
-
-All except FILE
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -62,10 +63,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.59.0
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

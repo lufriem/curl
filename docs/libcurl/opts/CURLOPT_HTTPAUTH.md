@@ -1,13 +1,16 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_HTTPAUTH
 Section: 3
 Source: libcurl
+Protocol:
+  - HTTP
 See-also:
   - CURLOPT_PASSWORD (3)
   - CURLOPT_PROXYAUTH (3)
   - CURLOPT_USERNAME (3)
+Added-in: 7.10.6
 ---
 
 # NAME
@@ -82,6 +85,8 @@ option to work, or build libcurl on Windows with SSPI support.
 
 ## CURLAUTH_NTLM_WB
 
+Support for this is removed since libcurl 8.8.0.
+
 NTLM delegating to winbind helper. Authentication is performed by a separate
 binary application that is executed when needed. The name of the application
 is specified at compile time but is typically **/usr/bin/ntlm_auth**.
@@ -121,9 +126,7 @@ see CURLOPT_AWS_SIGV4(3).
 
 CURLAUTH_BASIC
 
-# PROTOCOLS
-
-HTTP
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -142,9 +145,7 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Option Added in 7.10.6.
+# HISTORY
 
 CURLAUTH_DIGEST_IE was added in 7.19.3
 
@@ -156,8 +157,11 @@ CURLAUTH_BEARER was added in 7.61.0
 
 CURLAUTH_AWS_SIGV4 was added in 7.74.0
 
+# %AVAILABILITY%
+
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, CURLE_UNKNOWN_OPTION if not, or
-CURLE_NOT_BUILT_IN if the bitmask specified no supported authentication
-methods.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

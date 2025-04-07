@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_USE_SSL
 Section: 3
@@ -8,6 +8,12 @@ See-also:
   - CURLOPT_PROXY_SSLVERSION (3)
   - CURLOPT_SSLVERSION (3)
   - CURLOPT_SSL_OPTIONS (3)
+Protocol:
+  - FTP
+  - SMTP
+  - POP3
+  - IMAP
+Added-in: 7.17.0
 ---
 
 # NAME
@@ -53,9 +59,7 @@ Require SSL for all communication or fail with *CURLE_USE_SSL_FAILED*.
 
 CURLUSESSL_NONE
 
-# PROTOCOLS
-
-FTP, SMTP, POP3, IMAP, LDAP
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -75,12 +79,16 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
+# HISTORY
 
-Added in 7.11.0. This option was known as CURLOPT_FTP_SSL up to 7.16.4, and
-the constants were known as CURLFTPSSL_*
-Handled by LDAP since 7.81.0. Fully supported by the OpenLDAP backend only.
+This option was known as CURLOPT_FTP_SSL up to 7.16.4. Supported by LDAP since
+7.81.0. Fully supported by the OpenLDAP backend only.
+
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_PROXYTYPE
 Section: 3
@@ -7,6 +7,9 @@ Source: libcurl
 See-also:
   - CURLOPT_PROXY (3)
   - CURLOPT_PROXYPORT (3)
+Protocol:
+  - All
+Added-in: 7.10
 ---
 
 # NAME
@@ -32,7 +35,7 @@ HTTP Proxy. Default.
 ## CURLPROXY_HTTPS
 
 HTTPS Proxy using HTTP/1. (Added in 7.52.0 for OpenSSL and GnuTLS. Since
-7.87.0, it also works for BearSSL, mbedTLS, rustls, Schannel, Secure Transport
+7.87.0, it also works for BearSSL, mbedTLS, Rustls, Schannel, Secure Transport
 and wolfSSL.)
 
 ## CURLPROXY_HTTPS2
@@ -61,6 +64,8 @@ SOCKS5 Proxy.
 
 SOCKS5 Proxy. Proxy resolves URL hostname.
 
+##
+
 Often it is more convenient to specify the proxy type with the scheme part of
 the CURLOPT_PROXY(3) string.
 
@@ -68,9 +73,7 @@ the CURLOPT_PROXY(3) string.
 
 CURLPROXY_HTTP
 
-# PROTOCOLS
-
-Most
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -90,10 +93,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Always
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_BUFFERSIZE
 Section: 3
@@ -9,6 +9,9 @@ See-also:
   - CURLOPT_MAX_RECV_SPEED_LARGE (3)
   - CURLOPT_UPLOAD_BUFFERSIZE (3)
   - CURLOPT_WRITEFUNCTION (3)
+Protocol:
+  - All
+Added-in: 7.10
 ---
 
 # NAME
@@ -51,9 +54,7 @@ allocated as long as there are active transfers.
 
 CURL_MAX_WRITE_SIZE (16kB)
 
-# PROTOCOLS
-
-All
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -75,10 +76,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.10. Growing the buffer was added in 7.53.0.
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

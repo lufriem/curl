@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLINFO_CONDITION_UNMET
 Section: 3
@@ -9,6 +9,9 @@ See-also:
   - CURLOPT_TIMEVALUE (3)
   - curl_easy_getinfo (3)
   - curl_easy_setopt (3)
+Protocol:
+  - HTTP
+Added-in: 7.19.4
 ---
 
 # NAME
@@ -34,9 +37,7 @@ gets a zero stored if the condition instead was met. This can also return 1 if
 the server responded with a 304 HTTP status code, for example after sending a
 custom "If-Match-*" header.
 
-# PROTOCOLS
-
-HTTP and some
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -71,10 +72,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.19.4
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_getinfo(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

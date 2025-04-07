@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_PINNEDPUBLICKEY
 Section: 3
@@ -9,6 +9,16 @@ See-also:
   - CURLOPT_CAPATH (3)
   - CURLOPT_SSL_VERIFYHOST (3)
   - CURLOPT_SSL_VERIFYPEER (3)
+Protocol:
+  - TLS
+TLS-backend:
+  - OpenSSL
+  - GnuTLS
+  - wolfSSL
+  - mbedTLS
+  - Secure Transport
+  - Schannel
+Added-in: 7.39.0
 ---
 
 # NAME
@@ -48,9 +58,7 @@ option.
 
 NULL
 
-# PROTOCOLS
-
-All TLS based protocols: HTTPS, FTPS, IMAPS, POP3S, SMTPS etc.
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -111,7 +119,7 @@ footer:
 -----END PUBLIC KEY-----
 ~~~
 
-# AVAILABILITY
+# HISTORY
 
 ## PEM/DER support
 
@@ -137,7 +145,11 @@ footer:
 
 Other SSL backends not supported.
 
+# %AVAILABILITY%
+
 # RETURN VALUE
 
-Returns CURLE_OK if TLS enabled, CURLE_UNKNOWN_OPTION if not, or
-CURLE_OUT_OF_MEMORY if there was insufficient heap space.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLMOPT_CONTENT_LENGTH_PENALTY_SIZE
 Section: 3
@@ -7,6 +7,9 @@ Source: libcurl
 See-also:
   - CURLMOPT_CHUNK_LENGTH_PENALTY_SIZE (3)
   - CURLMOPT_PIPELINING (3)
+Protocol:
+  - HTTP
+Added-in: 7.30.0
 ---
 
 # NAME
@@ -34,11 +37,9 @@ CURLMOPT_MAX_PIPELINE_LENGTH(3).
 
 # DEFAULT
 
-The default value is 0, which means that the size penalization is inactive.
+0, which means that the size penalization is inactive.
 
-# PROTOCOLS
-
-HTTP(S)
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -51,10 +52,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.30.0
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLM_OK if the option is supported, and CURLM_UNKNOWN_OPTION if not.
+curl_multi_setopt(3) returns a CURLMcode indicating success or error.
+
+CURLM_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

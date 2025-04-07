@@ -4,7 +4,7 @@ SPDX-License-Identifier: curl
 Long: write-out
 Short: w
 Arg: <format>
-Help: Use output FORMAT after completion
+Help: Output FORMAT after completion
 Category: verbose
 Added: 6.5
 Multi: single
@@ -32,16 +32,17 @@ output a newline by using \n, a carriage return with \r and a tab space with
 The output is by default written to standard output, but can be changed with
 %{stderr} and %output{}.
 
-Output HTTP headers from the most recent request by using *%header{name}*
-where *name* is the case insensitive name of the header (without the trailing
-colon). The header contents are exactly as sent over the network, with leading
-and trailing whitespace trimmed (added in 7.84.0).
+Output HTTP header values from the transfer's most recent server response by
+using *%header{name}* where *name* is the case insensitive name of the header
+(without the trailing colon). The header contents are exactly as delivered over
+the network but with leading and trailing whitespace and newlines stripped off
+(added in 7.84.0).
 
 Select a specific target destination file to write the output to, by using
-*%output{name}* (added in curl 8.3.0) where *name* is the full file name. The
+*%output{name}* (added in curl 8.3.0) where *name* is the full filename. The
 output following that instruction is then written to that file. More than one
 *%output{}* instruction can be specified in the same write-out argument. If
-the file name cannot be created, curl leaves the output destination to the one
+the filename cannot be created, curl leaves the output destination to the one
 used prior to the *%output{}* instruction. Use *%output{\>\>name}* to append
 data to an existing file.
 
@@ -49,7 +50,7 @@ This output is done independently of if the file transfer was successful or
 not.
 
 If the specified action or output specified with this option fails in any way,
-it will not make curl return a (different) error.
+it does not make curl return a (different) error.
 
 **NOTE:** On Windows, the %-symbol is a special symbol used to expand
 environment variables. In batch files, all occurrences of % must be doubled
@@ -61,7 +62,12 @@ The variables available are:
 
 ## `certs`
 Output the certificate chain with details. Supported only by the OpenSSL,
-GnuTLS, Schannel and Secure Transport backends. (Added in 7.88.0)
+GnuTLS, Schannel, Rustls, and Secure Transport backends. (Added in 7.88.0)
+
+## `conn_id`
+The connection identifier last used by the transfer. The connection id is
+unique number among all connections using the same connection cache.
+(Added in 8.2.0)
 
 ## `content_type`
 The Content-Type of the requested document, if there was any.
@@ -74,13 +80,18 @@ The numerical exit code of the transfer. (Added in 7.75.0)
 
 ## `filename_effective`
 The ultimate filename that curl writes out to. This is only meaningful if curl
-is told to write to a file with the --remote-name or --output
-option. It's most useful in combination with the --remote-header-name
-option. (Added in 7.26.0)
+is told to write to a file with the --remote-name or --output option. It is
+most useful in combination with the --remote-header-name option.
+(Added in 7.26.0)
 
 ## `ftp_entry_path`
 The initial path curl ended up in when logging on to the remote FTP
 server. (Added in 7.15.4)
+
+## `header{name}`
+The value of header `name` from the transfer's most recent server response.
+Unlike other variables, the variable name `header` is not in braces. For
+example `%header{date}`. Refer to --write-out remarks. (Added in 7.84.0)
 
 ## `header_json`
 A JSON object with all HTTP response headers from the recent transfer. Values
@@ -117,7 +128,7 @@ The http method used in the most recent HTTP request. (Added in 7.72.0)
 
 ## `num_certs`
 Number of server certificates received in the TLS handshake. Supported only by
-the OpenSSL, GnuTLS, Schannel and Secure Transport backends.
+the OpenSSL, GnuTLS, Schannel, Rustls and Secure Transport backends.
 (Added in 7.88.0)
 
 ## `num_connects`
@@ -130,13 +141,28 @@ redirect). Note that the status line IS NOT a header. (Added in 7.73.0)
 ## `num_redirects`
 Number of redirects that were followed in the request. (Added in 7.12.3)
 
+## `num_retries`
+Number of retries actually performed when `--retry` has been used.
+(Added in 8.9.0)
+
 ## `onerror`
 The rest of the output is only shown if the transfer returned a non-zero error.
 (Added in 7.75.0)
 
+## `output{filename}`
+From this point on, the --write-out output is written to the filename specified
+in braces. The filename can be prefixed with `>>` to append to the file. Unlike
+other variables, the variable name `output` is not in braces. For example
+`%output{>>stats.txt}`. Refer to --write-out remarks. (Added in 8.3.0)
+
 ## `proxy_ssl_verify_result`
 The result of the HTTPS proxy's SSL peer certificate verification that was
 requested. 0 means the verification was successful. (Added in 7.52.0)
+
+## `proxy_used`
+Returns 1 if the previous transfer used a proxy, otherwise 0. Useful to for
+example determine if a `NOPROXY` pattern matched the hostname or not. (Added
+in 8.7.0)
 
 ## `redirect_url`
 When an HTTP request was made without --location to follow redirects (or when
@@ -207,10 +233,20 @@ remote host (or proxy) was completed.
 The time, in seconds, it took from the start until the name resolving was
 completed.
 
+## `time_posttransfer`
+The time it took from the start until the last byte is sent by libcurl.
+In microseconds. (Added in 8.10.0)
+
 ## `time_pretransfer`
 The time, in seconds, it took from the start until the file transfer was just
 about to begin. This includes all pre-transfer commands and negotiations that
 are specific to the particular protocol(s) involved.
+
+## `time_queue`
+The time, in seconds, the transfer was queued during its run. This adds
+the queue time for each redirect step that may have happened. Transfers
+may be queued for significant amounts of time when connection or parallel
+limits are in place. (Added in 8.12.0)
 
 ## `time_redirect`
 The time, in seconds, it took for all redirection steps including name lookup,
@@ -225,6 +261,12 @@ the result.
 
 ## `time_total`
 The total time, in seconds, that the full operation lasted.
+
+## `tls_earlydata`
+The amount of bytes that were sent as TLSv1.3 early data. This is 0
+if this TLS feature was not used and negative if the data sent had
+been rejected by the server. The use of early data is enabled via
+the command line option `--tls-earlydata`. (Added in 8.12.0)
 
 ## `url`
 The URL that was fetched. (Added in 7.75.0)
@@ -300,3 +342,9 @@ same index number as the origin globbed URL. (Added in 7.75.0)
 ## `url_effective`
 The URL that was fetched last. This is most meaningful if you have told curl
 to follow location: headers.
+
+## `xfer_id`
+The numerical identifier of the last transfer done. -1 if no transfer has been
+started yet for the handle. The transfer id is unique among all transfers
+performed using the same connection cache.
+(Added in 8.2.0)

@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_SASL_IR
 Section: 3
@@ -8,6 +8,10 @@ See-also:
   - CURLOPT_MAIL_AUTH (3)
   - CURLOPT_MAIL_FROM (3)
   - CURLOPT_SASL_AUTHZID (3)
+Protocol:
+  - SMTP
+  - IMAP
+Added-in: 7.31.0
 ---
 
 # NAME
@@ -43,9 +47,7 @@ SASL-IR CAPABILITY.
 
 0
 
-# PROTOCOLS
-
-IMAP, POP3 and SMTP
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -63,10 +65,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.31.0
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

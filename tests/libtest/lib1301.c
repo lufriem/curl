@@ -21,18 +21,9 @@
  * SPDX-License-Identifier: curl
  *
  ***************************************************************************/
-#include "test.h"
+#include "curlcheck.h"
 
-#define fail_unless(expr, msg)                             \
-  do {                                                     \
-    if(!(expr)) {                                          \
-      fprintf(stderr, "%s:%d Assertion '%s' failed: %s\n", \
-              __FILE__, __LINE__, #expr, msg);             \
-      return 1;                                            \
-    }                                                      \
-  } while(0)
-
-int test(char *URL)
+CURLcode test(char *URL)
 {
   int rc;
   (void)URL;
@@ -58,5 +49,5 @@ int test(char *URL)
   rc = curl_strnequal("ii", "II", 3);
   fail_unless(rc != 0, "return code should be non-zero");
 
-  return 0;
+  return CURLE_OK;
 }

@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_SSH_HOST_PUBLIC_KEY_MD5
 Section: 3
@@ -9,6 +9,10 @@ See-also:
   - CURLOPT_SSH_HOST_PUBLIC_KEY_SHA256 (3)
   - CURLOPT_SSH_KNOWNHOSTS (3)
   - CURLOPT_SSH_PUBLIC_KEYFILE (3)
+Protocol:
+  - SFTP
+  - SCP
+Added-in: 7.17.1
 ---
 
 # NAME
@@ -36,13 +40,14 @@ CURLOPT_SSH_HOST_PUBLIC_KEY_SHA256(3) instead.
 The application does not have to keep the string around after setting this
 option.
 
+Using this option multiple times makes the last set string override the
+previous ones. Set it to NULL to disable its use again.
+
 # DEFAULT
 
 NULL
 
-# PROTOCOLS
-
-SCP and SFTP
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -61,11 +66,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.17.1
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, CURLE_UNKNOWN_OPTION if not, or
-CURLE_OUT_OF_MEMORY if there was insufficient heap space.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_FNMATCH_FUNCTION
 Section: 3
@@ -8,6 +8,9 @@ See-also:
   - CURLOPT_DEBUGFUNCTION (3)
   - CURLOPT_FNMATCH_DATA (3)
   - CURLOPT_WILDCARDMATCH (3)
+Protocol:
+  - FTP
+Added-in: 7.21.0
 ---
 
 # NAME
@@ -42,9 +45,7 @@ error occurred.
 
 NULL == an internal function for wildcard matching.
 
-# PROTOCOLS
-
-FTP
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -79,10 +80,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.21.0
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_LOW_SPEED_TIME
 Section: 3
@@ -7,6 +7,9 @@ Source: libcurl
 See-also:
   - CURLOPT_LOW_SPEED_LIMIT (3)
   - CURLOPT_TIMEOUT (3)
+Protocol:
+  - All
+Added-in: 7.1
 ---
 
 # NAME
@@ -32,9 +35,7 @@ library to consider it too slow and abort.
 
 0, disabled
 
-# PROTOCOLS
-
-All
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -50,7 +51,7 @@ int main(void)
     curl_easy_setopt(curl, CURLOPT_LOW_SPEED_LIMIT, 30L);
     res = curl_easy_perform(curl);
     if(CURLE_OPERATION_TIMEDOUT == res) {
-      printf("Timeout!\n");
+      printf("Timeout.\n");
     }
     /* always cleanup */
     curl_easy_cleanup(curl);
@@ -58,10 +59,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Always
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

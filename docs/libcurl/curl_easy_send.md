@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: curl_easy_send
 Section: 3
@@ -9,6 +9,9 @@ See-also:
   - curl_easy_perform (3)
   - curl_easy_recv (3)
   - curl_easy_setopt (3)
+Protocol:
+  - All
+Added-in: 7.18.2
 ---
 
 # NAME
@@ -50,6 +53,8 @@ Furthermore if you wait on the socket and it tells you it is writable,
 curl_easy_send(3) may return **CURLE_AGAIN** if the only data that was sent
 was for internal SSL processing, and no other data could be sent.
 
+# %PROTOCOLS%
+
 # EXAMPLE
 
 ~~~c
@@ -76,9 +81,7 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.18.2.
+# %AVAILABILITY%
 
 # RETURN VALUE
 
@@ -91,5 +94,5 @@ On failure, returns the appropriate error code.
 This function may return **CURLE_AGAIN**. In this case, use your operating
 system facilities to wait until the socket is writable, and retry.
 
-If there is no socket available to use from the previous transfer, this function
-returns **CURLE_UNSUPPORTED_PROTOCOL**.
+If there is no socket available to use from the previous transfer, this
+function returns **CURLE_UNSUPPORTED_PROTOCOL**.

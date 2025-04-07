@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_SSL_VERIFYSTATUS
 Section: 3
@@ -8,6 +8,12 @@ See-also:
   - CURLOPT_CAINFO (3)
   - CURLOPT_SSL_VERIFYHOST (3)
   - CURLOPT_SSL_VERIFYPEER (3)
+Protocol:
+  - TLS
+TLS-backend:
+  - OpenSSL
+  - GnuTLS
+Added-in: 7.41.0
 ---
 
 # NAME
@@ -36,9 +42,7 @@ extension, the verification fails.
 
 0
 
-# PROTOCOLS
-
-All TLS based protocols: HTTPS, FTPS, IMAPS, POP3S, SMTPS etc.
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -49,7 +53,7 @@ int main(void)
   if(curl) {
     CURLcode res;
     curl_easy_setopt(curl, CURLOPT_URL, "https://example.com/");
-    /* ask for OCSP stapling! */
+    /* ask for OCSP stapling */
     curl_easy_setopt(curl, CURLOPT_SSL_VERIFYSTATUS, 1L);
     res = curl_easy_perform(curl);
     curl_easy_cleanup(curl);
@@ -57,12 +61,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.41.0. This option is currently only supported by the OpenSSL and
-GnuTLS TLS backends.
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if OCSP stapling is supported by the SSL backend, otherwise
-returns CURLE_NOT_BUILT_IN.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

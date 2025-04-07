@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLINFO_PRIVATE
 Section: 3
@@ -8,6 +8,9 @@ See-also:
   - CURLOPT_PRIVATE (3)
   - curl_easy_getinfo (3)
   - curl_easy_setopt (3)
+Protocol:
+  - All
+Added-in: 7.10.3
 ---
 
 # NAME
@@ -29,9 +32,7 @@ associated with the curl handle (set with the CURLOPT_PRIVATE(3)).
 Please note that for internal reasons, the value is returned as a char
 pointer, although effectively being a 'void *'.
 
-# PROTOCOLS
-
-All
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -59,10 +60,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.10.3
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_getinfo(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

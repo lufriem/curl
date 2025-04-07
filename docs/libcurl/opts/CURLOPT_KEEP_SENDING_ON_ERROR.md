@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_KEEP_SENDING_ON_ERROR
 Section: 3
@@ -8,6 +8,9 @@ See-also:
   - CURLINFO_RESPONSE_CODE (3)
   - CURLOPT_FAILONERROR (3)
   - CURLOPT_HTTPHEADER (3)
+Protocol:
+  - HTTP
+Added-in: 7.51.0
 ---
 
 # NAME
@@ -39,9 +42,7 @@ Most applications do not need this option.
 
 0, stop sending on error
 
-# PROTOCOLS
-
-HTTP
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -59,10 +60,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Along with HTTP. Added in 7.51.0.
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if HTTP is enabled, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

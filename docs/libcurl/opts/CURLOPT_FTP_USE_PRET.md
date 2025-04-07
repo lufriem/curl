@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_FTP_USE_PRET
 Section: 3
@@ -7,6 +7,9 @@ Source: libcurl
 See-also:
   - CURLOPT_FTP_USE_EPRT (3)
   - CURLOPT_FTP_USE_EPSV (3)
+Protocol:
+  - FTP
+Added-in: 7.20.0
 ---
 
 # NAME
@@ -32,9 +35,7 @@ no effect when using the active FTP transfers mode.
 
 0
 
-# PROTOCOLS
-
-FTP
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -47,7 +48,7 @@ int main(void)
     curl_easy_setopt(curl, CURLOPT_URL,
                      "ftp://example.com/old-server/file.txt");
 
-    /* a drftpd server, do it! */
+    /* a drftpd server, do it */
     curl_easy_setopt(curl, CURLOPT_FTP_USE_PRET, 1L);
 
     res = curl_easy_perform(curl);
@@ -57,10 +58,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.20.0
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

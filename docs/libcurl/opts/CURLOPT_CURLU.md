@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_CURLU
 Section: 3
@@ -12,6 +12,9 @@ See-also:
   - curl_url_get (3)
   - curl_url_set (3)
   - curl_url_strerror (3)
+Protocol:
+  - All
+Added-in: 7.63.0
 ---
 
 # NAME
@@ -42,11 +45,9 @@ updated contents is used.
 
 # DEFAULT
 
-The default value of this parameter is NULL.
+NULL
 
-# PROTOCOLS
-
-All
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -70,10 +71,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.63.0.
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

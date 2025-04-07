@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_DOH_URL
 Section: 3
@@ -8,6 +8,9 @@ See-also:
   - CURLOPT_DNS_CACHE_TIMEOUT (3)
   - CURLOPT_RESOLVE (3)
   - CURLOPT_VERBOSE (3)
+Protocol:
+  - All
+Added-in: 7.62.0
 ---
 
 # NAME
@@ -38,7 +41,11 @@ To find the DoH server itself, which might be specified using a name, libcurl
 uses the default name lookup function. You can bootstrap that by providing the
 address for the DoH server with CURLOPT_RESOLVE(3).
 
-Disable DoH use again by setting this option to NULL.
+The application does not have to keep the string around after setting this
+option.
+
+Using this option multiple times makes the last set string override the
+previous ones. Set it to NULL to disable its use again.
 
 # INHERIT OPTIONS
 
@@ -61,12 +68,9 @@ CURLOPT_FTPPORT(3), a proxy type set to **CURLPROXY_SOCKS4** or
 
 # DEFAULT
 
-NULL - there is no default DoH URL. If this option is not set, libcurl uses
-the default name resolver.
+NULL
 
-# PROTOCOLS
-
-All
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -82,15 +86,15 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.62.0
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK on success or CURLE_OUT_OF_MEMORY if there was insufficient
-heap space.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
 
-Note that curl_easy_setopt(3) does immediately parse the given string so
-when given a bad DoH URL, libcurl might not detect the problem until it later
-tries to resolve a name with it.
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).
+
+Note that curl_easy_setopt(3) does immediately parse the given string so when
+given a bad DoH URL, libcurl might not detect the problem until it later tries
+to resolve a name with it.

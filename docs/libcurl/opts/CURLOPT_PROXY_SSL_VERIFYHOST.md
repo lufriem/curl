@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLOPT_PROXY_SSL_VERIFYHOST
 Section: 3
@@ -9,6 +9,11 @@ See-also:
   - CURLOPT_PROXY_CAINFO (3)
   - CURLOPT_PROXY_SSL_VERIFYPEER (3)
   - CURLOPT_SSL_VERIFYPEER (3)
+Protocol:
+  - TLS
+TLS-backend:
+  - All
+Added-in: 7.52.0
 ---
 
 # NAME
@@ -36,7 +41,7 @@ When CURLOPT_PROXY_SSL_VERIFYHOST(3) is 2, the proxy certificate must
 indicate that the server is the proxy to which you meant to connect to, or the
 connection fails.
 
-Curl considers the proxy the intended one when the Common Name field or a
+curl considers the proxy the intended one when the Common Name field or a
 Subject Alternate Name field in the certificate matches the hostname in the
 proxy string which you told curl to use.
 
@@ -51,7 +56,7 @@ an error and leaving the flag untouched.
 From 7.66.0: treats 1 and 2 the same.
 
 When the *verify* value is 0L, the connection succeeds regardless of the
-names used in the certificate. Use that ability with caution!
+names used in the certificate. Use that ability with caution.
 
 See also CURLOPT_PROXY_SSL_VERIFYPEER(3) to verify the digital signature
 of the proxy certificate.
@@ -60,9 +65,7 @@ of the proxy certificate.
 
 2
 
-# PROTOCOLS
-
-All protocols when used over an HTTPS proxy.
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -81,14 +84,11 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
-
-Added in 7.52.0.
-
-If built TLS enabled.
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if TLS is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_setopt(3) returns a CURLcode indicating success or error.
 
-If 1 is set as argument, *CURLE_BAD_FUNCTION_ARGUMENT* is returned.
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).

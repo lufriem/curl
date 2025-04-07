@@ -1,5 +1,5 @@
 ---
-c: Copyright (C) Daniel Stenberg, <daniel.se>, et al.
+c: Copyright (C) Daniel Stenberg, <daniel@haxx.se>, et al.
 SPDX-License-Identifier: curl
 Title: CURLINFO_PROTOCOL
 Section: 3
@@ -8,6 +8,9 @@ See-also:
   - CURLINFO_RESPONSE_CODE (3)
   - curl_easy_getinfo (3)
   - curl_easy_setopt (3)
+Protocol:
+  - All
+Added-in: 7.52.0
 ---
 
 # NAME
@@ -26,10 +29,10 @@ CURLcode curl_easy_getinfo(CURL *handle, CURLINFO_PROTOCOL, long *p);
 
 This option is deprecated. We strongly recommend using
 CURLINFO_SCHEME(3) instead, because this option cannot return all
-possible protocols!
+possible protocols.
 
 Pass a pointer to a long to receive the version used in the last http
-connection. The returned value is set to one of the CURLPROTO_* values:
+connection. The returned value is set to one of these values:
 
 ~~~c
 CURLPROTO_DICT, CURLPROTO_FILE, CURLPROTO_FTP, CURLPROTO_FTPS,
@@ -41,9 +44,7 @@ CURLPROTO_SCP, CURLPROTO_SFTP, CURLPROTO_SMB, CURLPROTO_SMBS, CURLPROTO_SMTP,
 CURLPROTO_SMTPS, CURLPROTO_TELNET, CURLPROTO_TFTP, CURLPROTO_MQTT
 ~~~
 
-# PROTOCOLS
-
-All
+# %PROTOCOLS%
 
 # EXAMPLE
 
@@ -64,10 +65,15 @@ int main(void)
 }
 ~~~
 
-# AVAILABILITY
+# DEPRECATED
 
-Added in 7.52.0. Deprecated since 7.85.0.
+Deprecated since 7.85.0.
+
+# %AVAILABILITY%
 
 # RETURN VALUE
 
-Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION if not.
+curl_easy_getinfo(3) returns a CURLcode indicating success or error.
+
+CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
+libcurl-errors(3).
